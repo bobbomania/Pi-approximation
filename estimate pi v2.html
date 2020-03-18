@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<canvas id="myCanvas" width="2000" height="850">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+
+//change the sample size
+var n = 10;
+
+var points = [];
+
+for (i=0;i<n;i++){
+    var x = 2*Math.random();
+    var y = Math.pow(1-Math.pow((x-1),2),0.5);
+    points.push([x,y]);
+
+}
+
+points.sort(function(a,b) {
+    return a[0]-b[0]
+});
+
+var d = 0;
+
+//change the radius
+var r = 500;
+
+ctx.beginPath();
+ctx.strokeStyle = "#ff0000";
+ctx.arc(r+500, 700, r, Math.PI, 2*Math.PI);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.strokeStyle = "#000000"
+
+for (pos=0;pos<points.length-1;pos++){
+
+  d += Math.pow(Math.pow(points[pos][0]-points[pos+1][0],2) + Math.pow(points[pos][1]-points[pos+1][1],2),0.5);
+  //ctx.fillRect(r*points[pos][0]+500,-r*points[pos][1]+500,1,1);
+  ctx.moveTo(r*points[pos][0]+500,-r*points[pos][1]+700);
+  ctx.lineTo(r*points[pos+1][0]+500,-r*points[pos+1][1]+700);
+  ctx.stroke();
+
+}
+
+document.write('π is estimated to be :    ' , d);
+
+</script>
+
+</body>
+</html>
